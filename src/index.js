@@ -13,6 +13,8 @@ const client = new Client({
     ],
 });
 
+const chatBot = require('./chat.js');
+
 // Logging when Sherri is online
 client.on('ready', (c) => {
     console.log(`😎 ${c.user.username} is online.`);
@@ -26,38 +28,6 @@ client.on('ready', (c) => {
     }
 });
 
-client.on('messageCreate', (msg) => {
-    if (msg.author.bot) {
-        return;
-    }
-
-    if (msg.content === 'hello', 'Hello', 'Hello!', 'hello!') {
-        console.log('Received: ' + msg.content);
-        msg.reply('Hello!', 'Howdy!', 'Hey there!')
-           .then(sent => console.log('Sent: ' + sent.content));
-    }
-
-    if (msg.content === 'Smile') {
-        console.log('Received: ' + msg.content);
-
-        setTimeout(() => {
-            msg.reply(':)')
-                .then(sent => {
-                    console.log('Sent: ' + sent.content); // Log the sent message
-                });
-        }, 3000);
-    }
-
-    if (msg.content === 'Thanks') {
-        console.log('Recieved: ' + msg.content);
-
-        setTimeout(() => {
-            msg.reply('No problem')
-                .then(sent => {
-                    console.log('Sent: ' + sent.content); // Log the sent message
-                });
-        }, 3000);
-    }
-});
+chatBot(client);
 
 client.login(process.env.DISCORD_KEY);
